@@ -6,7 +6,7 @@
 
         void AddTask(ITask task);
 
-        void RemoveTask(Guid taskId);
+        void RemoveTask(ITask task);
 
         List<ITask> GetTasksForDate(DateTime date);
 
