@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestProjectWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:vm="clr-namespace:TestProject.ViewModel;assembly=TestProject" 
+        d:DataContext="{d:DesignInstance Type=vm:TaskManagerViewModel}">
 
+    <Grid>
+        <ListBox ItemsSource="{Binding Tasks}"
+             SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             VirtualizingPanel.IsVirtualizing="True"
+             VirtualizingPanel.VirtualizationMode="Recycling"
+             Margin="8">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:TaskViewModel}">
+                    <Border Margin="4" Padding="8" BorderBrush="LightGray" BorderThickness="1" CornerRadius="4">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,6,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Date, StringFormat=d}" />
+                                <TextBlock Text="  •  " />
+                                <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay}" Content="Done" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

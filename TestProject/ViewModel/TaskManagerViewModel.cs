@@ -5,7 +5,7 @@ using TestProject.Interface;
 
 namespace TestProject.ViewModel
 {
-    public class TaskManagerViewModel : INotifyPropertyChanged
+    public class TaskManagerViewModel
     {
        private readonly ITaskManager model;
 
@@ -13,30 +13,11 @@ namespace TestProject.ViewModel
         {
             this.model = model;
 
-            Tasks = new ObservableCollection<TaskViewModel>(model.Tasks.Cast<TaskViewModel>());
-
-            InitCommand();
+            Tasks = new ObservableCollection<TaskViewModel>(model.Tasks.Select(t => new TaskViewModel(t)));
         }
 
         public ObservableCollection<TaskViewModel> Tasks { get; set; }
 
         public TaskViewModel? SelectedTask { get; set; }
-
-        public ICommand AddComand { get; private set; }
-        public ICommand RemoveCommand { get; private set; }
-
-        private void InitCommand()
-        {
-            AddComand = new Command(AddTask);
-            RemoveCommand = new Command(RemoveTask, () => SelectedTask != null);
-        }
-
-        private void AddTask()
-        {
-        }
-
-        private void RemoveTask()
-        {
-        }
     }
 }
