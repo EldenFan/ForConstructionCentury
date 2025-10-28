@@ -4,6 +4,62 @@
              xmlns:local="clr-namespace:TestProjectWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="IconGreen" Color="#2ECC71"/>
+
+        <DrawingImage x:Key="IconPlus">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Brush="{StaticResource IconGreen}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup FillRule="Nonzero">
+                            <RectangleGeometry Rect="45,20,10,60"/>
+                            <RectangleGeometry Rect="20,45,60,10"/>
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="IconPlay">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Brush="{StaticResource IconGreen}">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry>
+                            <PathFigure StartPoint="30,20">
+                                <LineSegment Point="80,50"/>
+                                <LineSegment Point="30,80"/>
+                                <LineSegment Point="30,20"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="IconSearch">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="{StaticResource IconGreen}" Thickness="6"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="38,38" RadiusX="22" RadiusY="22"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <RotateTransform Angle="45" CenterX="60" CenterY="60"/>
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="{StaticResource IconGreen}">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="52,56,28,8"/>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
     </Application.Resources>
 </Application>

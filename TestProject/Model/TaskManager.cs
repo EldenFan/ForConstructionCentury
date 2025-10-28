@@ -7,45 +7,30 @@ namespace TestProject.Model
     {
         public List<ITask> Tasks { get; set; } = new List<ITask>();
 
-        public void AddTask(ITask task)
+        public void AddTask()
         {
-            Tasks.Add(task);
+            var newTask = new Task();
+            Tasks.Add(newTask);
         }
 
-        public void RemoveTask(ITask task)
+        public void RemoveTask(Guid taskId)
         {
-            Tasks.Remove(task);
+            var findTask = Tasks.Find(task => task.Id == taskId);
+
+            if (findTask != null)
+            {
+                Tasks.Remove(findTask);
+            }
         }
 
-       public  List<ITask> GetTasksForDate(DateTime date)
-       {
-            return Tasks.Where(x => x.Date.Date == date).ToList();
-       }
-
-        public List<ITask> GetTasksForWeek(DateTime date)
+        public List<ITask> GetTasksForPeriod(DateTime startDate, DateTime endDate)
         {
-            var firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
-            int diff = (7 + (date.Date.DayOfWeek - firstDayOfWeek)) % 7;
-            var weekStart = date.Date.AddDays(-diff);
-            var weekEndExclusive = weekStart.AddDays(7);
-
-            return Tasks.Where(t => t.Date.Date >= weekStart && t.Date.Date < weekEndExclusive).ToList();
+            return Tasks.Where(t => t.Date.Date >= startDate.Date && t.Date.Date <= endDate.Date).ToList();
         }
 
-        public List<ITask> GetTasksForMonth(DateTime date)
+        public List<ITask> GetTasksForName(string name)
         {
-            var monthStart = new DateTime(date.Year, date.Month, 1);
-            var monthEndExclusive = monthStart.AddMonths(1);
-
-            return Tasks.Where(t => t.Date.Date >= monthStart && t.Date.Date < monthEndExclusive).ToList();
-        }
-
-        public List<ITask> GetTasksForYear(DateTime date)
-        {
-            var yearStart = new DateTime(date.Year, 1, 1);
-            var yearEndExclusive = yearStart.AddYears(1);
-
-            return Tasks.Where(t => t.Date.Date >= yearStart && t.Date.Date < yearEndExclusive).ToList();
+            return Tasks.Where(t => t.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 }

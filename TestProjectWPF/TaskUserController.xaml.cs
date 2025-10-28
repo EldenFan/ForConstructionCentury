@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestProjectWPF.Task
+namespace TestProjectWPF
 {
     /// <summary>
-    /// Логика взаимодействия для TaskChangeWindow.xaml
+    /// Логика взаимодействия для TaskUserController.xaml
     /// </summary>
-    public partial class TaskChangeWindow : Window
+    public partial class TaskUserController : UserControl
     {
-        public TaskChangeWindow()
+        public TaskUserController()
         {
             InitializeComponent();
         }

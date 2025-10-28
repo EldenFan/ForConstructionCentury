@@ -4,16 +4,12 @@
     {
         List<ITask> Tasks { get; set; }
 
-        void AddTask(ITask task);
+        void AddTask();
 
-        void RemoveTask(ITask task);
+        void RemoveTask(Guid task);
 
-        List<ITask> GetTasksForDate(DateTime date);
+        List<ITask> GetTasksForPeriod(DateTime startDate, DateTime endDate);
 
-        List<ITask> GetTasksForWeek(DateTime date);
-
-        List<ITask> GetTasksForMonth(DateTime date);
-
-        List<ITask> GetTasksForYear(DateTime date);
+        List<ITask> GetTasksForName(string name);
     }
 }

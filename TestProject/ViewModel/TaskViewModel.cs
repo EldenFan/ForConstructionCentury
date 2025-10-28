@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using TestProject.Interface;
 
 namespace TestProject.ViewModel
@@ -7,19 +8,37 @@ namespace TestProject.ViewModel
     {
         private readonly ITask model;
 
+        private string name;
+        private string description;
+        private DateTime date;
+        private bool isCompleted;
+
+        private bool isChanged = false;
+
         public TaskViewModel(ITask task)
         {
             model = task;
+            name = task.Name;
+            description = task.Description;
+            date = task.Date;
+            isCompleted = task.IsCompleted;
+
+            SaveChangeCommand = new Command(SaveChange, () => isChanged);
+            DiscardChangeCommand = new Command(DiscardChange, () => isChanged);
+            DeleteCommand = new Command(Delete);
         }
+
+        public Guid Id => model.Id;
 
         public string Name
         {
-            get => model.Name;
+            get => name;
             set
             {
-                if (model.Name != value)
+                if (name != value)
                 {
-                    model.Name = value;
+                    name = value;
+                    isChanged = true;
                     OnPropertyChanged(nameof(Name));
                 }
             }
@@ -27,12 +46,13 @@ namespace TestProject.ViewModel
 
         public string Description
         {
-            get => model.Description;
+            get => description;
             set
             {
-                if (model.Description != value)
+                if (description != value)
                 {
-                    model.Description = value;
+                    description = value;
+                    isChanged = true;
                     OnPropertyChanged(nameof(Description));
                 }
             }
@@ -40,12 +60,13 @@ namespace TestProject.ViewModel
 
         public DateTime Date
         {
-            get => model.Date;
+            get => date;
             set
             {
-                if (model.Date != value)
+                if (date != value)
                 {
-                    model.Date = value;
+                    date = value;
+                    isChanged = true;
                     OnPropertyChanged(nameof(Date));
                 }
             }
@@ -53,16 +74,54 @@ namespace TestProject.ViewModel
 
         public bool IsCompleted
         {
-            get => model.IsCompleted;
+            get => isCompleted;
             set
             {
-                if (model.IsCompleted != value)
+                if (isCompleted != value)
                 {
-                    model.IsCompleted = value;
+                    isCompleted = value;
+                    isChanged = true;
                     OnPropertyChanged(nameof(IsCompleted));
                 }
             }
         }
+
+        public ICommand SaveChangeCommand { get; set; }
+
+        public ICommand DiscardChangeCommand { get; set; }
+
+        public ICommand DeleteCommand { get; set; }
+
+        private void SaveChange()
+        {
+            if (isChanged)
+            {
+                model.Name = name;
+                model.Description = description;
+                model.Date = date;
+                model.IsCompleted = isCompleted;
+                isChanged = false;
+            }
+        }
+
+        private void DiscardChange()
+        {
+            if (isChanged)
+            {
+                Name = model.Name;
+                Description = model.Description;
+                Date = model.Date;
+                IsCompleted = model.IsCompleted;
+                isChanged = false;
+            }
+        }
+
+        private void Delete()
+        {
+            Deleted?.Invoke(model.Id);
+        }
+
+        public event Action<Guid> Deleted;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
