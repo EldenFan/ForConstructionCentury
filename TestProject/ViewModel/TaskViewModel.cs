@@ -121,7 +121,7 @@ namespace TestProject.ViewModel
             Deleted?.Invoke(model.Id);
         }
 
-        public event Action<Guid> Deleted;
+        public Action<Guid>? Deleted;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
